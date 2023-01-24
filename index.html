@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Форма ввода</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <div id="message1"></div>
+	<br /> 
+	<div id="message2"></div>
+    
+	<p>
+		Имя: <br /> 
+        <input id="data1" />
+    </p>
+    
+	<p>
+        Возраст: <br /> 
+        <input id="data2" />
+    </p>
+    <button onclick="send()">Отправить</button>
+<script>
+    async function send(){
+ 
+        // получаем данные
+        const data1 = document.getElementById("data1").value;
+		
+        var data2 = document.getElementById("data2").value;
+		if (data2) {
+			null
+		} else {			
+			data2 = 0;
+		}
+        // отправляем запрос
+        const response = await fetch("/hello", {
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify({ 
+                    name: data1,
+                    age: data2
+                })
+            });
+            if (response.ok) {
+                const data = await response.json();
+                document.getElementById("message1").textContent = data.pymessage;
+				
+            }
+            else
+				console.log(response);
+    }
+</script>
+</body>
+</html>
